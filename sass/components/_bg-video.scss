@@ -1,0 +1,18 @@
+.bg-video { // arka plan yapmak için bunları uyguladık
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -1; // bütün elementlerin arkasına geçsin diye bu değeri verdik
+    opacity: .15;
+    overflow: hidden;
+    
+
+    &__content {
+        height: 100%;
+        width: 100%;
+        object-fit: cover; // for background to cover entire parent
+
+    }
+}

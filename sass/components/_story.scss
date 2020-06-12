@@ -1,0 +1,83 @@
+.story {
+    width: 75%;
+    margin: 0 auto;
+    box-shadow: 0 3rem 6rem rgba($color-black, .1); // 0:x 3rem:Y 6rem: blur
+    background-color: rgba($color-white, .6);
+    border-radius: 3px;
+    padding: 6rem;
+    padding-left: 9rem;
+    font-size: $default-font-size;
+    transform: skewX(-12deg); // yana doğru kaykılması için 
+
+    @include respond(tab-port) {
+        width: 100%;
+        padding: 4rem;
+        padding-left: 7rem;
+    }
+
+    @include respond(phone) {
+        transform: skewX(0);
+    }
+
+    &__shape {
+        width: 15rem;
+        height: 15rem;
+        float: left;
+        transform: translateX(-3rem) skewX(12deg);
+        position: relative;
+        overflow: hidden;
+        border-radius: 50%;
+
+
+        @supports (clip-path: polygon(0 0)) or(-webkit-clip-path: polygon(0 0)) {
+            -webkit-clip-path: circle(50% at 50% 50%);
+            clip-path: circle(50% at 50% 50%); 
+            -webkit-shape-outside: circle(50% at 50% 50%); 
+            shape-outside: circle(50% at 50% 50%);
+            border-radius: none;
+        }
+
+        @include respond(phone) {
+            transform: translate(-3rem) skewX(0);
+        }
+    }
+
+    &__img {
+        height: 100%; // resimin sığması için yapıyoruz
+        transform: translateX(-4rem) scale(1.4); // resmi yuvarlağın içine ortalamak için
+        backface-visibility: hidden;
+        transition: all .5s; // bunu ekleyince resim &:hover &__img'daki bölüm sayesinde estetik şekilde küçülüyor
+    }
+
+    &__text {
+        transform: skewX(12deg); // arkayı kaydırınca text yamulmasın diye geri düzeltiyoruz
+
+        @include respond(phone) {
+            transform: skewX(0);
+        }
+    }
+
+    &__caption {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 20%);
+        color: $color-white;
+        text-transform: uppercase;
+        font-size: 1.7rem;
+        text-align: center;
+        opacity: 0;
+        transition: all .5s;
+        backface-visibility: hidden; // caption'daki hover edildiğinde olan titremeyi engellemek için
+    }
+
+    &:hover &__caption { // when the story hovered, we want to change the caption
+        opacity: 1;
+        transform: translate(-50%, -50%); //because initial position was -50%
+    }
+
+    &:hover &__img { // as soon as we hover the image
+        transform: translateX(-4rem) scale(1);
+        filter: blur(3px) brightness(80%);
+    }
+}
